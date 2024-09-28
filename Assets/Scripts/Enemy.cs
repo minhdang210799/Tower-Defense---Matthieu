@@ -61,6 +61,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Kill()
     {
+        CoinManager.Instance.AddCoins(5);
+        LevelManager.Instance.RemoveEnemy();
         Destroy(gameObject);
     }
 }

@@ -16,6 +16,7 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable
         {
             Instance = this;
         }
+
     }
     #endregion
 
