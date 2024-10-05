@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour
 
     public void NextLevel()
     {
+        Time.timeScale = 1;
         currentLevel++;
         enemyAmount = Mathf.CeilToInt(currentLevel * 10 * 0.75f);
         EnemySpawner.Instance.SpawnEnemies();
@@ -36,14 +37,24 @@ public class LevelManager : MonoBehaviour
         enemiesInLevel++;
     }
 
+    public bool canLevelUp = true;
+
     public void RemoveEnemy()
     {
         enemiesInLevel--;
-
-        if (enemiesInLevel <= 0) 
-            if (EnemySpawner.Instance.hasSpawnedAll) 
-                NextLevel();
+        
+        if (enemiesInLevel <= 0 && EnemySpawner.Instance.hasSpawnedAll && canLevelUp == true)
+        {
+            canLevelUp = false;
+            OpenEndLevel();
+        }
     }
 
+    [SerializeField] GameObject endLevel;
 
+    public void OpenEndLevel()
+    {
+        endLevel.SetActive(true);
+        Time.timeScale = 0f;
+    }
 }

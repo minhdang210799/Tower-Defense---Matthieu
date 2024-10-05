@@ -102,6 +102,8 @@ MonoBehaviour:
   moveSpeed: 8
   lifeTime: 5
   damage: 1
+  piercingAmount: 1
+  piercingLife: 0
 --- !u!61 &334399738213363177
 BoxCollider2D:
   m_ObjectHideFlags: 0

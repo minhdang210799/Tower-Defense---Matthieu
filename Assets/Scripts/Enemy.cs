@@ -5,12 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     public float moveSpeed = 1f;
-    public float health = 1f;
+    public float health = 3f;
     [Space]
     public float attackRange = 0.5f;
     public int damage = 2;
     public float attackDelay;
     float timer;
+    [Space]
+    public int coinsReward = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +63,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Kill()
     {
-        CoinManager.Instance.AddCoins(5);
+        CoinManager.Instance.AddCoins(coinsReward);
         LevelManager.Instance.RemoveEnemy();
         Destroy(gameObject);
     }

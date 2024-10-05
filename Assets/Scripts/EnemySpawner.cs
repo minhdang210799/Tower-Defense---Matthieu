@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] GameObject enemy;
+    [SerializeField] Enemy enemy;
     [Space]
     public float x;
     public float yMin;
@@ -23,6 +23,8 @@ public class EnemySpawner : MonoBehaviour
     public float spawnInterval;
 
     public bool hasSpawnedAll;
+    [Space]
+    public int coinsReward = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,9 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        LevelManager level = LevelManager.Instance;
+        int cl = level.currentLevel;
+        spawnInterval = cl - cl * 0.1f - Mathf.Floor(cl - cl * 0.1f);
     }
 
     public void SpawnEnemies()
@@ -56,7 +60,8 @@ public class EnemySpawner : MonoBehaviour
     void Spawn()
     {
         float ranY = Random.Range(yMin, yMax);
-        Instantiate(enemy, new Vector2(x, ranY), Quaternion.identity);
+        Enemy enemy = Instantiate(this.enemy, new Vector2(x, ranY), Quaternion.identity);
+        enemy.coinsReward = coinsReward;
         LevelManager.Instance.AddEnemy();
     }
 }
