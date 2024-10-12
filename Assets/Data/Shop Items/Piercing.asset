@@ -18,5 +18,5 @@ MonoBehaviour:
   cost: 50
   isPermanent: 1
   duration: 0
-  buffType: 4
+  buffType: 3
   buffAmount: 1

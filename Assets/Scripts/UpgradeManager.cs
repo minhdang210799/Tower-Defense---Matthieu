@@ -17,6 +17,9 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] Shoot shootScript;
     [SerializeField] EnemySpawner enemySpawner;
 
+    [Header("Sound")]
+    public AudioClip upgradeSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +51,7 @@ public class UpgradeManager : MonoBehaviour
         }
 
         CoinManager.Instance.AddCoins(-item.cost);
+        SFXManager.PlaySound(upgradeSound);
     }
 
     void HandleHealthUpgrades(ShopItem item)
@@ -62,12 +66,8 @@ public class UpgradeManager : MonoBehaviour
         {
             case ShopItemBuffType.Firerate:
                 s.shootDelay += item.buffAmount; break;
-            case ShopItemBuffType.Damage:
-                s.damage += (int)item.buffAmount; break;
             case ShopItemBuffType.Piercing:
                 s.piercingAmount += (int)item.buffAmount; break;
-            case ShopItemBuffType.Explosion:
-                s.explosionRadius += item.buffAmount; break;
             case ShopItemBuffType.Arrows:
                 s.arrowAmount += (int)item.buffAmount; break;
         }

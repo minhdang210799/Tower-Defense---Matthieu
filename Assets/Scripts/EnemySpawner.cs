@@ -8,6 +8,15 @@ public class EnemySpawner : MonoBehaviour
     public static EnemySpawner Instance { get; private set; }
     private void Awake()
     {
+        if (!PlayerPrefs.HasKey("Reward"))
+        {
+            PlayerPrefs.SetInt("Reward", coinsReward);
+        }
+        else
+        {
+            coinsReward = PlayerPrefs.GetInt("Reward");
+        }
+
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
 
@@ -29,7 +38,6 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame

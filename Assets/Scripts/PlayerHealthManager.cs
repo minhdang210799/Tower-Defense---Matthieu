@@ -8,6 +8,15 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable
     public static PlayerHealthManager Instance { get; private set; }
     private void Awake()
     {
+        if (!PlayerPrefs.HasKey("Health"))
+        {
+            PlayerPrefs.SetInt("Health", 50);
+        }
+        else
+        {
+            playerHealth = PlayerPrefs.GetInt("Health");
+        }
+
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -21,6 +30,9 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable
     #endregion
 
     public int playerHealth = 50;
+
+    [Header("Sound")]
+    public AudioClip damageSound;
 
     // Start is called before the first frame update
     void Start()
@@ -38,11 +50,16 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable
     {
         playerHealth -= damage;
 
+        PlayerPrefs.SetInt("Health", playerHealth);
+        SFXManager.PlaySound(damageSound, 0.9f, 1.1f, 0.9f, 1.1f);
+
         if (playerHealth <= 0) Kill();
     }
 
     public void Kill()
     {
+        PlayerPrefs.DeleteKey("Level");
+        PlayerPrefs.DeleteKey("Health");
         Debug.Log("Game Over");
     }
 }

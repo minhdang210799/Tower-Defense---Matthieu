@@ -8,6 +8,15 @@ public class CoinManager : MonoBehaviour
     public static CoinManager Instance { get; private set; }
     private void Awake()
     {
+        if (!PlayerPrefs.HasKey("Coins"))
+        {
+            PlayerPrefs.SetInt("Coins", coins);
+        }
+        else
+        {
+            coins = PlayerPrefs.GetInt("Coins");
+        }
+
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
 

@@ -8,6 +8,15 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
     private void Awake()
     {
+        if (!PlayerPrefs.HasKey("Level"))
+        {
+            PlayerPrefs.SetInt("Level", 1);
+        }
+        if (!PlayerPrefs.HasKey("Enemies"))
+        {
+            PlayerPrefs.SetInt("Enemies", Mathf.CeilToInt(1 * 10 * 0.75f));
+        }
+
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
@@ -15,16 +24,26 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        currentLevel = 0;
-        NextLevel();
+        enemyAmount = PlayerPrefs.GetInt("Enemies");
+        ToLevel(PlayerPrefs.GetInt("Level"));
     }
 
     public int currentLevel;
 
     public void NextLevel()
     {
+        canLevelUp = true;
         Time.timeScale = 1;
         currentLevel++;
+        enemyAmount = Mathf.CeilToInt(currentLevel * 10 * 0.75f);
+        EnemySpawner.Instance.SpawnEnemies();
+    }
+
+    public void ToLevel(int level)
+    {
+        canLevelUp = true;
+        Time.timeScale = 1;
+        currentLevel = level;
         enemyAmount = Mathf.CeilToInt(currentLevel * 10 * 0.75f);
         EnemySpawner.Instance.SpawnEnemies();
     }
@@ -45,6 +64,7 @@ public class LevelManager : MonoBehaviour
         
         if (enemiesInLevel <= 0 && EnemySpawner.Instance.hasSpawnedAll && canLevelUp == true)
         {
+            PlayerPrefs.SetInt("Level", currentLevel);
             canLevelUp = false;
             OpenEndLevel();
         }
@@ -56,5 +76,10 @@ public class LevelManager : MonoBehaviour
     {
         endLevel.SetActive(true);
         Time.timeScale = 0f;
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Level", currentLevel);
     }
 }

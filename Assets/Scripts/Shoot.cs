@@ -8,20 +8,58 @@ public class Shoot : MonoBehaviour
     [SerializeField] Transform shootPos;
 
     [Header("Shooting Options")]
-    public float shootDelay;
+    public float shootDelay = 1.5f;
     float shootTimer;
 
     [Header("Arrow Options")]
     public int damage = 1;
     public int piercingAmount = 1;
-    public float explosionRadius = 0f;
     public int arrowAmount = 1;
     public float arrowSplitRadius;
+
+    [Header("Sound")]
+    public AudioClip shootSound;
+
+    private void Awake()
+    {
+        if (!PlayerPrefs.HasKey("Piercing"))
+        {
+            PlayerPrefs.SetInt("Piercing", piercingAmount);
+        }
+        else
+        {
+            piercingAmount = PlayerPrefs.GetInt("Piercing");
+
+        }
+        if (!PlayerPrefs.HasKey("Firerate"))
+        {
+            PlayerPrefs.SetFloat("Firerate", shootDelay);
+        }
+        else
+        {
+            shootDelay = PlayerPrefs.GetFloat("Firerate");
+
+        }
+        if (!PlayerPrefs.HasKey("Arrow"))
+        {
+            PlayerPrefs.SetInt("Arrow", arrowAmount);
+        }
+        else
+        {
+            arrowAmount = PlayerPrefs.GetInt("Arrow");
+
+        }
+    }
+
+    [ContextMenu("Delete Player Prefs")]
+    public void DeletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -53,6 +91,8 @@ public class Shoot : MonoBehaviour
 
     void ShootArrow()
     {
+        SFXManager.PlaySound(shootSound, 0.9f, 1.1f, 0.9f, 1.1f);
+
         if (arrowAmount == 1 || arrowSplitRadius <= 0)
         {
             SpawnArrow();
@@ -74,6 +114,5 @@ public class Shoot : MonoBehaviour
         arrow = Instantiate(this.arrow, shootPos.position, transform.rotation);
         arrow.damage = damage;
         arrow.piercingAmount = piercingAmount;
-        arrow.explosionRadius = explosionRadius;
     }
 }

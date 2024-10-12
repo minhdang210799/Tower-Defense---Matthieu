@@ -14,10 +14,14 @@ public class Enemy : MonoBehaviour, IDamageable
     [Space]
     public int coinsReward = 2;
 
+    [Header("FX")]
+    public AudioClip damageSound;
+    public ParticleSystem damageFX;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        timer = attackDelay;
     }
 
     // Update is called once per frame
@@ -55,6 +59,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         health -= damage;
 
+        SFXManager.PlaySound(damageSound, 0.9f, 1.1f, 0.9f, 1.1f);
+
         if (health <= 0)
         {
             Kill();
@@ -65,6 +71,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         CoinManager.Instance.AddCoins(coinsReward);
         LevelManager.Instance.RemoveEnemy();
+        VFXManager.SpawnVFX(damageFX, transform.position);
         Destroy(gameObject);
     }
 }

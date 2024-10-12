@@ -126,6 +126,9 @@ MonoBehaviour:
   attackRange: 3
   damage: 2
   attackDelay: 2
+  coinsReward: 2
+  damageSound: {fileID: 8300000, guid: 464e9a114b6726544add770659c21f37, type: 3}
+  damageFX: {fileID: 2869647578003018016, guid: b18f50fe2dbe66c49abedb7727d7bcd8, type: 3}
 --- !u!61 &-1623409147689890500
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public enum ShopItemBuffType
 {
-    Firerate, 
-    Damage, 
+    Firerate,  
     Money, 
     Health, 
-    Piercing, 
-    Explosion, 
+    Piercing,  
     Arrows, 
 }
 
