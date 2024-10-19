@@ -28,6 +28,5 @@ public class CoinManager : MonoBehaviour
     public void AddCoins(int coins)
     {
         this.coins += coins;
-        PlayerPrefs.SetInt("Coins", this.coins);
     }
 }

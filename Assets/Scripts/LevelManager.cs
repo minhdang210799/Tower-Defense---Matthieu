@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
     private void Awake()
     {
+        currentLevel = 1;
         if (!PlayerPrefs.HasKey("Level"))
         {
             PlayerPrefs.SetInt("Level", 1);
@@ -28,7 +29,7 @@ public class LevelManager : MonoBehaviour
         ToLevel(PlayerPrefs.GetInt("Level"));
     }
 
-    public int currentLevel;
+    [Min(1)] public int currentLevel;
 
     public void NextLevel()
     {
@@ -76,6 +77,9 @@ public class LevelManager : MonoBehaviour
     {
         endLevel.SetActive(true);
         Time.timeScale = 0f;
+
+        PlayerPrefs.SetInt("Coins", CoinManager.Instance.coins);
+        PlayerPrefs.SetInt("Health", PlayerHealthManager.Instance.playerHealth);
     }
 
     private void OnApplicationQuit()

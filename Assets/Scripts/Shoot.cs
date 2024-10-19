@@ -91,7 +91,7 @@ public class Shoot : MonoBehaviour
 
     void ShootArrow()
     {
-        SFXManager.PlaySound(shootSound, 0.9f, 1.1f, 0.9f, 1.1f);
+        SFXManager.PlaySound(shootSound, 0.5f, 0.6f, 0.9f, 1.1f);
 
         if (arrowAmount == 1 || arrowSplitRadius <= 0)
         {

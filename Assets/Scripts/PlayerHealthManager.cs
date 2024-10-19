@@ -50,7 +50,6 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable
     {
         playerHealth -= damage;
 
-        PlayerPrefs.SetInt("Health", playerHealth);
         SFXManager.PlaySound(damageSound, 0.9f, 1.1f, 0.9f, 1.1f);
 
         if (playerHealth <= 0) Kill();
@@ -60,7 +59,6 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable
     {
         playerHealth += health;
 
-        PlayerPrefs.SetInt("Health", playerHealth);
         if (playerHealth > 50) playerHealth = 50;
     }
 

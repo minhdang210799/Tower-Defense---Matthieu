@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    void Awake()
+    {
+        int damage = Mathf.CeilToInt(LevelManager.Instance.currentLevel * 1.25f);
+        if (!PlayerPrefs.HasKey("EnemyDamage"))
+        {
+            PlayerPrefs.SetInt("EnemyDamage", damage);
+            this.damage = damage;
+        }
+        else
+        {
+            this.damage = PlayerPrefs.GetInt("EnemyDamage");
+        }
+    }
+
     public float moveSpeed = 1f;
     public float health = 3f;
     [Space]
@@ -72,6 +86,9 @@ public class Enemy : MonoBehaviour, IDamageable
         CoinManager.Instance.AddCoins(coinsReward);
         LevelManager.Instance.RemoveEnemy();
         VFXManager.SpawnVFX(damageFX, transform.position);
+
+        PlayerPrefs.SetInt("EnemyDamage", damage);
+
         Destroy(gameObject);
     }
 }
