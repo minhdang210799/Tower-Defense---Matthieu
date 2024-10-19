@@ -56,7 +56,7 @@ public class UpgradeManager : MonoBehaviour
 
     void HandleHealthUpgrades(ShopItem item)
     {
-        healthManager.playerHealth += (int)item.buffAmount;
+        healthManager.Heal((int)item.buffAmount);
     }
 
     void HandleShootingUpgrades(ShopItem item)
@@ -65,16 +65,20 @@ public class UpgradeManager : MonoBehaviour
         switch (item.buffType)
         {
             case ShopItemBuffType.Firerate:
-                s.shootDelay += item.buffAmount; break;
+                s.shootDelay += item.buffAmount;
+                PlayerPrefs.SetFloat("Fierate", s.shootDelay); break;
             case ShopItemBuffType.Piercing:
-                s.piercingAmount += (int)item.buffAmount; break;
+                s.piercingAmount += (int)item.buffAmount;
+                PlayerPrefs.SetInt("Piercing", s.piercingAmount); break;
             case ShopItemBuffType.Arrows:
-                s.arrowAmount += (int)item.buffAmount; break;
+                s.arrowAmount += (int)item.buffAmount;
+                PlayerPrefs.SetInt("Arrow", s.arrowAmount); break;
         }
     }
 
     void HandleEnemyUpgrades(ShopItem item)
     {
         enemySpawner.coinsReward += (int)item.buffAmount;
+        PlayerPrefs.SetInt("Reward", enemySpawner.coinsReward);
     }
 }

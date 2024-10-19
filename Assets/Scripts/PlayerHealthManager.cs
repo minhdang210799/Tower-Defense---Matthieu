@@ -56,6 +56,14 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable
         if (playerHealth <= 0) Kill();
     }
 
+    public void Heal(int health)
+    {
+        playerHealth += health;
+
+        PlayerPrefs.SetInt("Health", playerHealth);
+        if (playerHealth > 50) playerHealth = 50;
+    }
+
     public void Kill()
     {
         PlayerPrefs.DeleteKey("Level");
